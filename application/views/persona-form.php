@@ -9,7 +9,7 @@
 	</div>
 </div>
 
-<?php echo form_open('persona/guardar'); ?>
+<?php echo form_open('persona/accion/guardar'); ?>
 	<div class="row">
 		<div class="large-12 columns">
 			<fieldset>
@@ -79,6 +79,17 @@
 								?>
 							</select>
 						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-6 columns">
+						<label>
+							Sexo
+							<select name="sexo">
+								<option value="">Seleccionar</option>
+								<option value="1">Femenino</option>
+								<option value="2">Masculino</option>
+							</select>
 					</div>
 				</div>
 				<div class="row">
@@ -181,6 +192,14 @@
 							Parentesco
 							<select name="pariente">
 								<option value="">Seleccione</option>
+								<?php
+									if (!empty($personas)) {
+										foreach ($personas as $ppersona){
+											$class = ($persona->pariente == $ppersona->id) ? ' selected=="selected"': '';
+											echo '<option value="'.$ppersona->id.'"'.$class.'>'.$ppersona->apellido_paterno.' '.$ppersona->apellido_materno.', '.$ppersona->nombre.'</option>';
+										}
+									}
+								 ?>
 							</select>
 						</label>
 					</div>
@@ -199,6 +218,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<input type="hidden" name="accion" value="<?php echo (!empty($persona)) ? 'editar' : 'agregar' ?>">
+			<input type="hidden" name="id" value="<?php echo (!empty($id)) ? $id : '' ?>">
 			<input type="submit" class="button right" value="Guardar">
 			<a href="<?php echo site_url("persona"); ?>" class="button">Cancelar</a>
 		</div>

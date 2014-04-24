@@ -11,6 +11,20 @@
 </div>
 <div class="row">
 	<div class="large-12 columns">
+	<?php
+		if (!empty($messages)){
+			foreach ($messages as $message)
+				echo '<div class="alert-box success">'.$message.'</div>';
+		}
+		if (!empty($errors)){
+			foreach ($errors as $error)
+				echo '<div class="alert-box alert">'.$error.'</div>';
+		}
+	?>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
 		<?php
 			if (!empty($personas)):
 				echo '<table>';
@@ -33,11 +47,11 @@
 								echo '<td>'.$persona->apellido_paterno.' '.$persona->apellido_materno.', '.$persona->nombre.'</td>';
 								echo '<td>'.$persona->age.'</td>';
 								echo '<td>'.$persona->sexo.'</td>';
-								echo '<td>'.$persona->estado.'</td>';
+								echo '<td>'.$persona->nombre_estado.'</td>';
 								echo '<td>'.$persona->fecha_ingreso.'</td>';
-								echo '<td>'.$persona->familia.'</td>';
-								echo '<td>'.$persona->domicilio.'</td>';
-								echo '<td>'.$persona->albergue.'</td>';
+								echo '<td>'.$persona->familia_apellido_paterno.'-'.$persona->familia_apellido_materno.'</td>';
+								echo '<td>'.$persona->calle.' '.$persona->numero.' '.$persona->depto.' '.$persona->sector.'</td>';
+								echo '<td>'.$persona->nombre_albergue.'</td>';
 								echo '<td> <a data-tooltip class="has-tip" title="Borrar persona" href="'.site_url("persona/accion/borrar/".$persona->id).'"><i class="fi-x"></i></a> <a data-tooltip class="has-tip" title="Editar persona" href="'.site_url("persona/accion/editar/".$persona->id).'"><i class="fi-page-edit"></i></a></td>';
 							echo '<tr>';
 						}
