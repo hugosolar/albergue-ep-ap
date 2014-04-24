@@ -28,6 +28,35 @@ class Familia extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	function accion($action) {
+		$error = array();
+		$data = array(
+			'accion' => $action,
+			'familias' => $this->get_data('familia','apellido_paterno'),
+			'domicilios' => $this->get_data('domicilio','id')
+			);
+		if ($action == 'editar') {
+			$segment = $this->uri->segment(4);
+			$id = (!empty($segment)) ? $segment : 0;
+
+			if ($id) {
+				$data['id'] = $id;
+			} else {
+				$error[] = 'no se ha especificado una persona';
+				$data['errores'] = $error;
+			}
+			$familias = $this->get_data('familia','apellido_paterno',$id);
+			$data['familias'] = current($familias);
+			$this->load->view('header', $this->header_data);
+			$this->load->view('familia-form',$data);
+			$this->load->view('footer');
+		} else if ($action == 'agregar') {
+			$this->load->view('header', $this->header_data);
+			$this->load->view('familia-form',$data);
+			$this->load->view('footer');
+		}
+	}
+
 	/**
 	* get_data
 	* extrae data de las tablas sin id extrae todas
